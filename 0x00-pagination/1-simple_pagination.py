@@ -37,5 +37,5 @@ class Server:
                 and page > 0 and page_size > 0
         irange = index_range(page, page_size)
         dataset = self.dataset()
-        return [] if irange[0] > len(dataset) or irange[1] > len(dataset)\
+        return [] if not dataset or irange[0] > len(dataset) or irange[1] > len(dataset)\
             else dataset[irange[0]:irange[1]]
