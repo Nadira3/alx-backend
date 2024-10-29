@@ -5,7 +5,10 @@ Deletion-resilient hypermedia pagination
 
 import csv
 import math
-from typing import List
+from typing import List, Dict, dataclass_transform
+
+
+index_range = __import__('0-simple_helper_function').index_range
 
 
 class Server:
@@ -40,4 +43,28 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-            pass
+        """Dataset indexed by sorting position, starting at 0
+        """
+        dataset = self.indexed_dataset()
+
+        # Assert that index is valid
+        assert isinstance(index, int) and index >= 0 and index < len(dataset)
+
+        data = []
+        i = index
+        while len(data) < page_size and i < len(dataset):
+            # Only add to `data` if the key `i` exists in `dataset`
+            if i in dataset:
+                data.append(dataset[i])
+            i += 1  # Increment `i` each time to move to the next item
+
+        # Calculate the new index for the next page
+        new_index = i
+
+        # Prepare the response with the appropriate data
+        return {
+            "index": index,
+            "data": data,
+            "page_size": page_size,
+            "next_index": new_index if new_index < len(dataset) else None
+        }
