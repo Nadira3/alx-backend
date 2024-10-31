@@ -25,7 +25,7 @@ class FIFOCache(BaseCaching):
 
             # Remove the first item
             self.cache_data.pop(first_key)
-            print("DISCARD: ", first_key)
+            print("DISCARD:", first_key)
 
     def get(self, key):
         """ Get an item by key
