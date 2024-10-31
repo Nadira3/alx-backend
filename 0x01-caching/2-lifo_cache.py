@@ -18,14 +18,16 @@ class LIFOCache(BaseCaching):
             return
 
         if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-            # Remove the last item
-            print(self.lifo_order)
+            # Remove the first item in the LIFO order
             lifo_key = self.lifo_order.pop(0)
             del self.cache_data[lifo_key]
+
+            # Add to the end of the LIFO order list
+            self.lifo_order.append(key)
             print(f"DISCARD: {lifo_key}")
 
         # Insert the item at the front of the LIFO order list
-        if key not in self.cache_data:
+        if key not in self.lifo_order:
             self.lifo_order.insert(0, key)
 
         # Add the item to the cache
