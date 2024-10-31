@@ -53,12 +53,14 @@ class LFUCache(BaseCaching):
         return self.cache_data[key]
 
     def lfu_add(self, key):
+        """ add to lfu list """
         if key in self.lfu_order.keys():
             self.lfu_order[key] += 1
         else:
             self.lfu_order[key] = 0
 
     def lru_add(self, key):
+        """ add to lru list """
         # If key already exists, update the order
         if key in self.lru_order:
             self.lru_order.remove(key)
@@ -67,6 +69,7 @@ class LFUCache(BaseCaching):
             self.lru_order.append(key)
 
     def get_lru(self, min_used_keys):
+        """ get the least recently used key """
         for key in self.lru_order:
             if key in min_used_keys:
                 return key
