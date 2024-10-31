@@ -17,7 +17,7 @@ class LIFOCache(BaseCaching):
         if key is None or item is None:
             return
 
-        if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+        if key not in self.cache_data.keys() and len(self.cache_data) >= BaseCaching.MAX_ITEMS:
             # Remove the first item in the LIFO order
             lifo_key = self.lifo_order.pop(0)
             del self.cache_data[lifo_key]
