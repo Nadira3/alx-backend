@@ -5,7 +5,7 @@ Deletion-resilient hypermedia pagination
 
 import csv
 import math
-from typing import List, Dict, dataclass_transform
+from typing import List, Dict
 
 
 index_range = __import__('0-simple_helper_function').index_range
