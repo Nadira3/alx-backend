@@ -4,7 +4,7 @@
 """ this module contains a pagination function """
 
 
-from typing import Tuple, dataclass_transform
+from typing import Tuple
 import csv
 import math
 from typing import List
