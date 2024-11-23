@@ -25,6 +25,19 @@ def get_user():
     return None
 
 
+# Function to get the locale from URL parameter or user settings
+@babel.localeselector
+def get_locale():
+    # Check if 'locale' is passed in the URL, otherwise
+    # fallback to user's locale or the default locale
+    locale = request.args.get('locale')
+    if locale:
+        return locale
+    if g.user and g.user.get('locale'):
+        return g.user['locale']
+    return request.accept_languages.best_match(['en', 'fr'])
+
+
 # Before request to set global user
 @app.before_request
 def before_request():
