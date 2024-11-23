@@ -4,7 +4,16 @@ from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
 
 
+# Set up Flask Babel
+class Config:
+    """ Configuration for Babel """
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
+
+
 app = Flask(__name__)
+app.config.from_object(Config)
 babel = Babel(app)
 
 
@@ -25,17 +34,17 @@ def get_user():
     return None
 
 
-# Function to get the locale from URL parameter or user settings
+# Function to get locale based on URL parameter or other methods
 @babel.localeselector
 def get_locale():
-    # Check if 'locale' is passed in the URL, otherwise
-    # fallback to user's locale or the default locale
-    locale = request.args.get('locale')
-    if locale:
+    """ Determine the best match with supported languages """
+    # Check if locale is passed as URL parameter
+    locale = request.args.get("locale")
+    if locale in app.config["LANGUAGES"]:
         return locale
-    if g.user and g.user.get('locale'):
-        return g.user['locale']
-    return request.accept_languages.best_match(['en', 'fr'])
+
+    # Fallback to accept languages
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 # Before request to set global user
