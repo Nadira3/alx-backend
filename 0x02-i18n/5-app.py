@@ -28,6 +28,7 @@ users = {
 
 # Function to get user from URL parameters
 def get_user():
+    """ get user from dictionary """
     user_id = request.args.get('login_as', type=int)
     if user_id and user_id in users:
         return users[user_id]
@@ -50,14 +51,17 @@ def get_locale():
 # Before request to set global user
 @app.before_request
 def before_request():
+    """ run before request """
     g.user = get_user()
 
 
 # Index route
 @app.route('/')
 def index():
+    """ render template """
     return render_template('5-index.html')
 
 
 if __name__ == '__main__':
+    """ main function """
     app.run()
