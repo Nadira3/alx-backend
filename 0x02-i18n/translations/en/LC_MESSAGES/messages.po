@@ -34,5 +34,5 @@ msgstr "You are logged in as %(username)s."
 
 #: templates/5-index.html:14
 msgid "login_msg"
-msgstr "You are logged in."
+msgstr "You are not logged in."
 
