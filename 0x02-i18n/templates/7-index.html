@@ -8,6 +8,7 @@
     <h1>{{ _('home_header') }}</h1>
     {% if g.user %}
         <p>{{ _('login_msg_usr', username=g.user['name']) }}</p>
+	<p>{{ _('current_timezone') % {'timezone': get_timezone()} }}</p>
     {% else %}
         <p>{{ _('login_msg') }}</p>
     {% endif %}
